@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1 id="main-title">NBA Players</h1>
+            <a href="#" id="add-link">Add Player Here</a>
+        </header>
+        <div class="players">
+            <div class="col1of2">
+                <div id="player-list"></div>
+                <div id="player-details"></div>
+            </div>
+            
+            <div id="add-player-container" class= "dialog transparent">
+                <span class="close">&times;</span>
+                <h1 id="second-title">Players</h1>
+                <form id="add-player" method="POST">
+                        <input type="hidden" name="_id" value="-1" />
+                        <p>
+                            <label for="name">Player Name:</label>
+                            <input type="text" id="name" name="name" required />
+                        </p>
+
+                        <p>
+                            <label for="position">Position:</label>
+                            <input type="text" id="position" name="position" required />
+                        </p>
+
+                        <p>
+                            <label for="team">Team:</label>
+                            <input type="text" id="team" name="team" required />
+                        </p>
+
+                        <p>
+                            <label for="nickname">Nickname:</label>
+                            <input type="text" id="nickname" name="nickname" required />
+                        </p>
+
+                        <p id="skills-p">
+                            <label class="inline">Skills:</label>
+                            <a href="#" id="add-skill">Add Skill</a>
+                            <section id="skill-boxes"></section>
+                        </p>
+
+                        <p>
+                            <label for="img">Add Image:</label>
+                            <input type="file" id="img" name="img" />
+                        </p>
+
+                        <p>
+                            <button type="submit">Submit</button>
+                        </p>
+                </form>  
+            </div>
+        </div>
+    </body>
+</html>
