@@ -6,8 +6,14 @@ app.use(express.static("public"));
 app.use(express.json());
 const cors = require("cors");
 app.use(cors());
+const mongoose = require("mongoose");
 
 const upload = multer({ dest: __dirname + "/public/images" });
+
+mongoose
+    .connect("mongodb://localhost/players")
+    .then(() => console.log("Connected to mongodb"))
+    .catch((error) => console.log("Couldn't connect to mongodb", error));
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
