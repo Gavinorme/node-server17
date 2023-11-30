@@ -96,15 +96,7 @@ app.post("/api/players", upload.single("img"), (req, res)=> {
         skills: req.body.skills.split(",")
     })
     
-    // {
-    //     _id: players.length + 1,
-    //     name: req.body.name,
-    //     position: req.body.position,
-    //     team: req.body.team,
-    //     nickname: req.body.nickname,
-        
-    //     skills: req.body.skills.split(","),
-    // };
+    
 
     if(req.file) {
         player.img = "images/" +req.file.filename;
@@ -120,44 +112,46 @@ const createPlayer = async (res, player) =>{
 
 
 app.put("/api/players/:id", upload.single("img"), (req, res) => {
-    const id = parseInt(req.params.id);
+    // const id = parseInt(req.params.id);
+    // const player = players.find((r)=>r.id === id);
 
-    const player = players.find((r)=>r.id === id);
+    
     
     const result = validatePlayer(req.body);
+    console.log(result);
 
     if(result.error) {
         res.status(400).send(result.error.details[0].message);
         return;
     }
+    updatePlayer(req,res);
+});
 
-    player.name = req.body.name;
-    player.position = req.body.position;
-    player.team = req.body.team;
-    player.nickname = req.body.nickname;
-    player.skills = req.body.skills.split(",");
+const updatePlayer = async (req, res) => {
+    let fieldsToUpdate = {
+        name: req.body.name,
+        position: req.body.position,
+        team: req.body.team,
+        nickname: req.body.nickname,
+        skills: req.body.skills.split(",")
+    }
 
     if(req.file) {
-        player.img = "images/" +req.file.filename;
+        fieldsToUpdate.img = "images/" + req.file.filename;
     }
 
-    res.send(player);
-});
+    const result = await Player.updateOne({_id:req.params.id}, fieldsToUpdate);
+    res.send(result);
+};
 
 app.delete("/api/players/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-
-    const player = players.find((r)=>r.id === id);
-
-    if(!player) {
-        res.status(400).send("The player with the given id was not found.");
-        return;
-    }
-
-    const index = players.indexOf(player);
-    players.splice(index,1);
-    res.send(player);
+    removePlayers(res, req.params.id);
 });
+
+const removePlayers = async(req, id) => {
+    const player = await Player.findByIdAndDelete(id);
+    res.send(player);
+}
 
 const validatePlayer = (player) => {
     const schema = Joi.object({
