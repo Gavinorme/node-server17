@@ -11,8 +11,11 @@ const mongoose = require("mongoose");
 const upload = multer({ dest: __dirname + "/public/images" });
 
 mongoose
-    .connect("mongodb+srv://gorme:Gavinorme@cluster0.s2hjtru.mongodb.net/?retryWrites=true&w=majority")
-    .then(() => console.log("Connected to mongodb"))
+    .connect("mongodb://localhost/players")
+    // .connect("mongodb+srv://gorme:Gavinorme@cluster0.s2hjtru.mongodb.net/?retryWrites=true&w=majority")
+    .then(() => {
+        console.log("Connected to mongodb")
+    })
     .catch((error) => console.log("Couldn't connect to mongodb", error));
 
 app.get("/", (req, res) => {
@@ -67,16 +70,15 @@ app.get("/api/players", (req, res) => {
     res.send(players);
 });
 
+
 app.get("/api/players/:id", (req, res) => {
-    const id = parseInt(req.params.id);
-
-    const player = players.find((r)=>r.id === id);
-
-    if(!player) {
-        res.status(404).send("The player with the given id was not found");
-    }
-    res.send(player);
+    getPlayer(res, req.params.id);
 });
+
+const getPlayer = async(res) => {
+    const player = await Player.findOne({ _id: id })
+    res.send(player);
+};
 
 app.post("/api/players", upload.single("img"), (req, res)=> {
     const result = validatePlayer(req.body);
@@ -86,23 +88,34 @@ app.post("/api/players", upload.single("img"), (req, res)=> {
         return;
     }
 
-    const player = {
-        _id: players.length + 1,
+    const player = new Player({
         name: req.body.name,
         position: req.body.position,
         team: req.body.team,
         nickname: req.body.nickname,
+        skills: req.body.skills.split(",")
+    })
+    
+    // {
+    //     _id: players.length + 1,
+    //     name: req.body.name,
+    //     position: req.body.position,
+    //     team: req.body.team,
+    //     nickname: req.body.nickname,
         
-        skills: req.body.skills.split(","),
-    };
+    //     skills: req.body.skills.split(","),
+    // };
 
     if(req.file) {
         player.img = "images/" +req.file.filename;
     }
-
-    players.push(player);
-    res.send(player);
+    createPlayer(res, player);
 });
+
+const createPlayer = async (res, player) =>{
+    const result = await player.save();
+    res.send(player);
+};
 
 
 
