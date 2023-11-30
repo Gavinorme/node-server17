@@ -29,7 +29,7 @@ const playerSchema = new mongoose.Schema({
     nickname: String,
     skills: [String],
     img: String,
-    _id: mongoose.SchemaTypes.ObjectId,
+    // _id: mongoose.SchemaTypes.ObjectId,
 });
 
 const Player = mongoose.model("Player", playerSchema);
