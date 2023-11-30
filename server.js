@@ -112,8 +112,6 @@ const createPlayer = async (res, player) =>{
 
 
 app.put("/api/players/:id", upload.single("img"), (req, res) => {
-    // const id = parseInt(req.params.id);
-    // const player = players.find((r)=>r.id === id);
 
     
     
