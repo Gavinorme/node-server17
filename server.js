@@ -148,7 +148,7 @@ app.delete("/api/players/:id", (req, res) => {
     removePlayers(res, req.params.id);
 });
 
-const removePlayers = async(req, id) => {
+const removePlayers = async(res, id) => {
     const player = await Player.findByIdAndDelete(id);
     res.send(player);
 }
