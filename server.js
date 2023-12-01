@@ -44,30 +44,10 @@ const getPlayers = async(res) => {
     res.send(players);
 };
 
-// let players = [
-//     {
-//         id: 1, name: "Lebron James", position: "Power Forward", team: "Lakers", nickname: "King James", skills: ["Strength, agility and high basketball intelligence"], img: "images/lebron.jpeg", 
-//     },
-//     {
-//         id: 2, name: "Stephen Curry", position: "Power Forward", team: "Warriors", nickname: "Chef Curry", skills: ["Shooting, handling, and passing"], img: "images/steph.jpeg", 
-//     },
-//     {
-//         id: 3, name: "Kevin Durant", position: "Power Forward", team: "Suns", nickname: "EasyMoneySniper", skills: ["Shooting, isolation, and mid-range"], img: "images/kd.jpeg", 
-//     },
-//     {
-//         id: 4, name: "Damian Lillard", position: "Power Forward", team: "Bucks", nickname: "Dame Dolla", skills: ["Clutch, deep 3's, and handling"], img: "images/dame.jpeg", 
-//     },
-//     {
-//         id: 5, name: "Kyrie Irving", position: "Power Forward", team: "Mavricks", nickname: "Uncle Drew", skills: ["Handling, layups, and passing"], img: "images/kyrie.jpeg", 
-//     },
-//     {
-//         id: 6, name: "Nkola Jokic", position: "Power Forward", team: "Nuggets", nickname: "Joker", skills: ["Passing, shooting, and rebounds"], img: "images/jokic.jpeg", 
-//     },
-// ];
 
-app.get("/api/players", (req, res) => {
-    res.send(players);
-});
+// app.get("/api/players", (req, res) => {
+//     res.send(players);
+// });
 
 
 app.get("/api/players/:id", (req, res) => {
@@ -136,9 +116,9 @@ const updatePlayer = async (req, res) => {
     if(req.file) {
         fieldsToUpdate.img = "images/" + req.file.filename;
     }
-
     const result = await Player.updateOne({_id:req.params.id}, fieldsToUpdate);
-    res.send(result);
+    const player = await Player.findById(req.params.id);
+    res.send(player);
 };
 
 app.delete("/api/players/:id", (req, res) => {

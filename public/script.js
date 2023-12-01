@@ -111,7 +111,7 @@ const deletePlayer = async (player) => {
 
 const populateEditForm = (player) => {
     const form = document.getElementById("add-player");
-    form._id.value = player.id;
+    form._id.value = player._id;
     form.name.value = player.name;
     form.position.value = player.position
     form.team.value = player.team;
@@ -134,8 +134,10 @@ const populateSkills = (skills) => {
 const addPlayer = async (e) => 
 {
     e.preventDefault();
+    
     const form = document.getElementById("add-player");
     const formData = new FormData(form);
+    console.log(...formData);
     formData.append("skills", getSkills());
     let response;
 
@@ -151,6 +153,8 @@ const addPlayer = async (e) =>
     }
 
         else { //existing player
+            console.log(...formData);
+            console.log("ID IS ******* " + form._id.value);
             response = await fetch(`/api/players/${form._id.value}`,{
                 method: "PUT",
                 body: formData,
@@ -168,6 +172,7 @@ const addPlayer = async (e) =>
         //get the player with the indicated id
         //then display
         displayDetails(player);
+        console.log(...formData);
     }
 
     document.querySelector(".dialog").classList.add("transparent");
