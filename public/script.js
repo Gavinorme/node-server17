@@ -1,6 +1,6 @@
 const getPlayer = async () => {
     try {
-        return (await fetch("/api/players")).json();
+        return (await fetch("https://node-server-17.onrender.com/api/players")).json();
     } catch(error) {
         console.log("error");
     }
@@ -90,7 +90,7 @@ const displayDetails = (player) =>
 };
 
 const deletePlayer = async (player) => {
-    let response = await fetch(`/api/players/${player._id}`, {
+    let response = await fetch(`https://node-server-17.onrender.com/api/players/${player._id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json;charset=utf-8",

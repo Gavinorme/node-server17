@@ -35,7 +35,7 @@ const Player = mongoose.model("Player", playerSchema);
 
 
 
-app.get("/api/players", (req, res) => {
+app.get("https://node-server-17.onrender.com/api/players", (req, res) => {
     getPlayers(res);
 });
 
@@ -50,7 +50,7 @@ const getPlayers = async(res) => {
 // });
 
 
-app.get("/api/players/:id", (req, res) => {
+app.get("https://node-server-17.onrender.com/api/players/:id", (req, res) => {
     getPlayer(res, req.params.id);
 });
 
@@ -59,7 +59,7 @@ const getPlayer = async(res) => {
     res.send(player);
 };
 
-app.post("/api/players", upload.single("img"), (req, res)=> {
+app.post("https://node-server-17.onrender.com/api/players", upload.single("img"), (req, res)=> {
     const result = validatePlayer(req.body);
 
     if(result.error) {
@@ -90,7 +90,7 @@ const createPlayer = async (res, player) =>{
 
 
 
-app.put("/api/players/:id", upload.single("img"), (req, res) => {
+app.put("https://node-server-17.onrender.com/api/players/:id", upload.single("img"), (req, res) => {
 
     
     
@@ -121,7 +121,7 @@ const updatePlayer = async (req, res) => {
     res.send(player);
 };
 
-app.delete("/api/players/:id", (req, res) => {
+app.delete("https://node-server-17.onrender.com/api/players/:id", (req, res) => {
     removePlayers(res, req.params.id);
 });
 
