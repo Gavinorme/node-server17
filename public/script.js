@@ -1,6 +1,6 @@
 const getPlayer = async () => {
     try {
-        return (await fetch("https://node-server-17.onrender.com/api/players")).json();
+        return (await fetch("/api/players")).json();
     } catch(error) {
         console.log("error");
     }
@@ -27,7 +27,7 @@ const showPlayer = async () => {
         if(player.img) {
         const img = document.createElement("img");
         section.append(img);
-        img.src = "https://node-server-17.onrender.com/" + player.img;
+        img.src =  player.img; //add render link here
         } 
 
         a.onclick = (e) => {
@@ -90,7 +90,7 @@ const displayDetails = (player) =>
 };
 
 const deletePlayer = async (player) => {
-    let response = await fetch(`https://node-server-17.onrender.com/api/players/${player.id}`, {
+    let response = await fetch(`/api/players/${player._id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json;charset=utf-8",
@@ -144,14 +144,14 @@ const addPlayer = async (e) =>
         formData.delete("_id");
         // console.log(...formData);
     
-        response = await fetch("https://node-server-17.onrender.com/api/players", {
+        response = await fetch("/api/players", {
             method: "POST",
             body: formData,
         });
     }
 
         else { //existing player
-            response = await fetch(`https://node-server-17.onrender.com/api/players/${form._id.value}`,{
+            response = await fetch(`/api/players/${form._id.value}`,{
                 method: "PUT",
                 body: formData,
             });
