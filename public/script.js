@@ -27,7 +27,7 @@ const showPlayer = async () => {
         if(player.img) {
         const img = document.createElement("img");
         section.append(img);
-        img.src =  player.img; //add render link here
+        img.src =  "https://node-server-17.onrender.com/" + player.img; //add render link here
         } 
 
         a.onclick = (e) => {
